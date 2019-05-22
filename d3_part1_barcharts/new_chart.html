@@ -3,11 +3,25 @@
 <head>
 	<title>I'm Learning D3</title>
 	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+
+	<style>
+	text {
+		font-family: "Open Sans", sans-serif;
+		font-size: 12px;
+	}
+</style>
 </head>
 <body>
 	<!-- Location for page elements. -->
 	<script>
-    var ratData = [ 40, 90, 30, 60 ];
+    var ratData = [ 40, 70, 60, 20, 40, 100, 60 ];
+		var arrayLength = ratData.length
+		const maxValue = d3.max(ratData, d => d)
+		const x_axisLength = 100
+		const y_axisLength = 100
+		const yScale = d3.scaleLinear()
+			.domain([0, maxValue])
+			.range([0, y_axisLength])
 
 		const w = 150
 		const h = 175
@@ -47,7 +61,7 @@
 			.attr('class', 'y label')
 			.attr('text-anchor', 'end')
 			.text('No. of Rats')
-			.attr('transform', 'translate(20, 20) rotate(-90)')	
+			.attr('transform', 'translate(20, 90) rotate(-90)')
 
 
 	</script>
