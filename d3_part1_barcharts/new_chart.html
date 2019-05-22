@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<title>I'm Learning D3</title>
+	<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
+</head>
+<body>
+	<!-- Location for page elements. -->
+	<script>
+    var ratData = [ 40, 90, 30, 60 ];
+
+		const w = 150
+		const h = 170
+
+		var svg = d3.select('body')
+			.append('svg')
+			.attr('height', h)
+			.attr('width', w)
+
+		svg.selectAll('rect')
+			.data(ratData)
+			.enter()
+			.append('rect')
+			.attr('x', (d, i) => i*25 +30)
+			.attr('y', 0)
+			.attr('width', 20)
+			.attr('height', d => d)
+			.attr('fill', "steelblue")
+	</script>
+</body>
+</html>
