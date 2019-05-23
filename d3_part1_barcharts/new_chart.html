@@ -14,54 +14,67 @@
 <body>
 	<!-- Location for page elements. -->
 	<script>
-    var ratData = [ 40, 70, 60, 20, 40, 100, 60 ];
+    var ratData = [];
+		d3.csv('./data/rat-data.csv', d => {
+			return {
+				city : d.city,
+				rats : +d.rats
+			}
+		}, function(error, rows) {
+			ratData = rows
+			console.log(ratData)
+			createVisualization()
+		})
+
+	function createVisualization() {
 		var arrayLength = ratData.length
-		const maxValue = d3.max(ratData, d => d)
+		const maxValue = d3.max(ratData, d => d.rats)
 		const x_axisLength = 100
 		const y_axisLength = 100
 		const yScale = d3.scaleLinear()
-			.domain([0, maxValue])
-			.range([0, y_axisLength])
+		.domain([0, maxValue])
+		.range([0, y_axisLength])
 
 		const w = 150
 		const h = 175
 
 		var svg = d3.select('body')
-			.append('svg')
-			.attr('height', h)
-			.attr('width', w)
+		.append('svg')
+		.attr('height', h)
+		.attr('width', w)
 
 		svg.selectAll('rect')
-			.data(ratData)
-			.enter()
-			.append('rect')
-			.attr('x', (d, i) => i * (x_axisLength/arrayLength) +30)
-			.attr('y', d => h - yScale(d) -75 )
-			.attr('width', (x_axisLength/arrayLength) - 1 )
-			.attr('height', d => yScale(d))
-			.attr('fill', "red")
+		.data(ratData)
+		.enter()
+		.append('rect')
+		.attr('x', (d, i) => i * (x_axisLength/arrayLength) +30)
+		.attr('y', d => h - yScale(d.rats))
+		.attr('width', (x_axisLength/arrayLength) - 1 )
+		.attr('height', d => yScale(d.rats))
+		.attr('fill', "red")
 
 		svg.append("line")
-			.attr("x1", 30)
-			.attr("y1", 174)
-			.attr("x2", 130)
-			.attr("y2", 174)
-			.attr("stroke-width", 2)
-			.attr("stroke", "black");
+		.attr("x1", 30)
+		.attr("y1", 174)
+		.attr("x2", 130)
+		.attr("y2", 174)
+		.attr("stroke-width", 2)
+		.attr("stroke", "black");
 
 		svg.append('line')
-			.attr('x1', 30)
-			.attr('y1', 75)
-			.attr('x2', 30)
-			.attr('y2', 175)
-			.attr('stroke-width', 2)
-			.attr('stroke', 'black');
+		.attr('x1', 30)
+		.attr('y1', 75)
+		.attr('x2', 30)
+		.attr('y2', 175)
+		.attr('stroke-width', 2)
+		.attr('stroke', 'black');
 
 		svg.append('text')
-			.attr('class', 'y label')
-			.attr('text-anchor', 'end')
-			.text('No. of Rats')
-			.attr('transform', 'translate(20, 90) rotate(-90)')
+		.attr('class', 'y label')
+		.attr('text-anchor', 'end')
+		.text('No. of Rats')
+		.attr('transform', 'translate(20, 90) rotate(-90)')
+	}
 
 
 	</script>
