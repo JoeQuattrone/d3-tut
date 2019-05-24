@@ -6,16 +6,20 @@
 		<!-- <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 		<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
 		<style type="text/css">
-			/* No style rules here yet */
+			/* .axis {
+				font: 10px sans-serif;
+				}
+
+			.axis path,
+			.axis line {
+			fill: none;
+			stroke: #000;
+			shape-rendering: crispEdges;
+			} */
 		</style>
 	</head>
 	<body>
 		<script type="text/javascript">
-
-			//Width and height
-			var w = 180;
-			var h = 180;
-
 
 			let ratData = []
 
@@ -33,19 +37,29 @@
 
 			function createVisualization() {
 				//Create SVG element
+
+				//Width and height
+				var w = 180;
+				var h = 180;
+				const padding = 30
+
 				const xScale = d3.scaleLinear()
 				.domain([0, d3.max(ratData, d => d.rats )])
-				.range([0, 180])
+				.range([padding, w - padding])
 
 				const yScale = d3.scaleLinear()
 				.domain([0, d3.max(ratData, d => d.coffee)])
-				.range([0, 180])
+				.range([h - padding, padding])
+
+				const xAxis = d3.axisTop(xScale).ticks(5)
+				const yAxis = d3.axisRight(yScale).ticks(5)
 
 				var svg = d3.select("body")
 				.append("svg")
 				.attr("width", w)
 				.attr("height", h)
 				.attr("style", "outline: thin solid black;");
+
 
 				svg.selectAll("circle")
 				.data(ratData)
@@ -58,6 +72,15 @@
 					return yScale(d.coffee);
 				})
 				.attr("r", 5);
+
+				svg.append('g')
+					.attr('transform', `translate(0, ${h})`)
+					.attr('class', 'axis')
+					.call(xAxis)
+				svg.append('g')
+					.attr('transform', 'translate(0 , 0)')
+					.attr('class', 'axis')
+					.call(yAxis)
 			}
 		</script>
 	</body>
