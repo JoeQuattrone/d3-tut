@@ -6,7 +6,7 @@
 		<!-- <script src="//d3js.org/d3.v3.min.js" charset="utf-8"></script> -->
 		<script src="https://d3js.org/d3.v4.js" charset="utf-8"></script>
 		<style type="text/css">
-			/* .axis {
+			.axis {
 				font: 10px sans-serif;
 				}
 
@@ -15,7 +15,7 @@
 			fill: none;
 			stroke: #000;
 			shape-rendering: crispEdges;
-			} */
+			}
 		</style>
 	</head>
 	<body>
@@ -51,14 +51,13 @@
 				.domain([0, d3.max(ratData, d => d.coffee)])
 				.range([h - padding, padding])
 
-				const xAxis = d3.axisTop(xScale).ticks(5)
-				const yAxis = d3.axisRight(yScale).ticks(5)
+				const xAxis = d3.axisBottom(xScale).ticks(3)
+				const yAxis = d3.axisLeft(yScale).ticks(5)
 
 				var svg = d3.select("body")
 				.append("svg")
 				.attr("width", w)
 				.attr("height", h)
-				.attr("style", "outline: thin solid black;");
 
 
 				svg.selectAll("circle")
@@ -74,11 +73,11 @@
 				.attr("r", 5);
 
 				svg.append('g')
-					.attr('transform', `translate(0, ${h})`)
+					.attr("transform", "translate(0," + (h - padding) + ")")
 					.attr('class', 'axis')
 					.call(xAxis)
 				svg.append('g')
-					.attr('transform', 'translate(0 , 0)')
+					.attr("transform", "translate(" + padding + ", 0)")
 					.attr('class', 'axis')
 					.call(yAxis)
 			}
